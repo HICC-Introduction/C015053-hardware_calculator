@@ -1,2 +1,0 @@
-# C015053-hardware_calculator
-hardware_calculator
