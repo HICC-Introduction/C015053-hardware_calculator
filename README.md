@@ -55,7 +55,7 @@
 |4|전원|아두이노 파워 업계열 컨버터 케이블(5v to 12v)|1,700원|   |https://smartstore.naver.com/openidea/products/4846497720?%7C
 |5|입출력: 디스플레이|OPEN-YA001-008|800원|세그먼트 FND 0.56인치 4CH 빨강|https://smartstore.naver.com/openidea/products/4983434849%7C
 |5|입출력: 키패드|OPEN-TC06-013핀|670원|아두이노 멤브레인 4X4 키패드|https://smartstore.naver.com/openidea/products/4833221581%7C
-|총합|   |   |14,670원|   |   |
+|총합|   |   |13,870원|   |   |
 ### 소프트웨어
 * OS : [OS 이름	Microsoft Windows 10 Pro 10.0.19042 빌드 19042]
 * 개발 스택 : Arduino Mega
