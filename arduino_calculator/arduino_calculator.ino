@@ -1,4 +1,11 @@
+//1.첫 번째 숫자 입력, 2. 연산기호 선택, 3.숫자 입력, 4.= 단계로 계산
+//이후 C버튼을 통해 reset하고 다시 위의 과정 반복
+
 #include <Keypad.h> 
+#include <SevSeg.h>
+
+SevSeg sevseg;   //7-segment
+
 
 void(* resetFunc) (void) = 0; //계산기 초기화 함수
 
@@ -7,8 +14,8 @@ void(* resetFunc) (void) = 0; //계산기 초기화 함수
 const byte ROWS = 4; //four rows 
 const byte COLS = 4; //four columns 
  
-byte rowPins[ROWS] = {9, 8, 7, 6}; //connect to the row pinouts of the keypad 
-byte colPins[COLS] = {5, 4, 3, 2}; //connect to the column pinouts of the keypad 
+byte rowPins[ROWS] = {29, 28, 27, 26}; //connect to the row pinouts of the keypad 
+byte colPins[COLS] = {25, 24, 23, 22}; //connect to the column pinouts of the keypad 
  
 char keys[ROWS][COLS] = { 
   {'1','2','3', '/'}, 
@@ -23,20 +30,9 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 //keypad 입력 코드
 
 
-int segmentLEDs[] = {11, 12, 13, 14, 15, 16, 17, 18};
-int segmentLEDsNum=8;
-int digitForNum[10][8]={
-  {0, 0, 0, 0, 0, 0, 1, 1}, //0
-  {1, 0, 0, 1, 1, 1, 1, 1}, //1
-  {0, 0, 1, 0, 0, 1, 0, 1}, //2
-  {0, 0, 0, 0, 1, 1, 0, 1}, //3
-  {1, 0, 0, 1, 1, 0, 0, 1}, //4
-  {0, 1, 0, 0, 1, 0, 0, 1}, //5
-  {0, 1, 0, 0, 0, 0, 0, 1}, //6
-  {0, 0, 0, 1, 1, 1, 1, 1}, //7
-  {0, 0, 0, 0, 0, 0, 0, 1}, //8
-  {0, 0, 0, 0, 1, 0, 0, 1}  //9
-};
+
+
+
 
 double firstResult=0; 
 double secondResult=0; 
@@ -54,13 +50,16 @@ int input1(){
     }
     if(key >= '0' && key <= '9'){
       firstResult=(firstResult*10)+(key-'0');
-      //연산된 값을 7-segment에 표현하는 과정을 진행하지 못함
-      Serial.println(key);
+      delay(10);
+      sevseg.setNumber(firstResult, 0);//???
+      sevseg.refreshDisplay();
+      Serial.println(firstResult);
     }
     else if (key=='/') break;
     else if (key=='*') break;
     else if (key=='-') break;
     else if (key=='+') break;
+    
   }
   Serial.println(firstResult);
   return firstResult;
@@ -152,30 +151,45 @@ void calculateSign(){
 
 void setup(){ 
   Serial.begin(9600); 
-  for (int i=0;i<segmentLEDsNum;i++){
-    pinMode(segmentLEDs[i],OUTPUT);
-  }
-  digitalWrite(resetPin, HIGH);
-  pinMode(resetPin, OUTPUT);
-} 
+  byte numDigits = 4;
+  byte digitPins[] = {10, 11, 12, 13};
+  byte segmentPins[] = {9, 2, 3, 5, 6, 8, 7, 4};
+
+  bool leadingZeros = false; //leading zero x
+  bool resistorsOnSegments = true; 
+  bool updateWithDelaysIn = true;
+  byte hardwareConfig = COMMON_CATHODE; 
+  sevseg.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments);
+  sevseg.setBrightness(100);
+}
+  
+
+
 
    
 void loop(){
+  
+  
   key = keypad.getKey();
   input1();
+  sevseg.setNumber(firstResult, 0);
   calculateSign();
   input2();
   calculate();
 
   if(key == '='){
-    Serial.println("=");
-    Serial.println(result);  
+    Serial.println("=");//????
+    delay(10);
+    Serial.println(result);
+    delay(10);
+    sevseg.setNumber(result, 0);
+    
   }
   
+  sevseg.refreshDisplay();
   
 }
 
-  
 
 
   
