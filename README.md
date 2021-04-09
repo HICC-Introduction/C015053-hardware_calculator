@@ -14,7 +14,6 @@
                 * 입력받은 숫자와 연산자를 통해 연산한다. 
             * 계산기의 입력과정을 코드로 구현한다.
                 * 4자리 이하의 값을 입력받는다.
-                    * 
                 * leading-zero는 입력되지 않도록 한다.
             * 계산기의 출력과정을 코드로 구현한다. 
                 * 숫자를 입력할 때 입력하는 숫자를 디스플레이에 표현한다.
@@ -62,31 +61,16 @@
 * 개발 프로그램 : Arduino IDE / Visual Studio
 * 개발 언어 : C/C++
 ### 코드룰
-* 예시 프로그램
-```
-    # 변수명
-    test_variable = 13
-    # 클래스명
-    class TestClass:
-        def __init__(self):
-            # 프로퍼티명
-            self.testProperty = 41
-        # 메소드명
-        def TestMethod(self):
-            print(self.testProperty)
-    if __name__ == "__main__":
-        test_variable = TestClass(43)
-        test_variable.TestMethod()
-```
+
 * 코드 룰
 ```
     #include <stdio.h>
 
     #define testPin 1//pin지정
     
-    int test_variable=13;//변수명
+    int testVariable=13;//변수명
     
-    void TestClass(){   //함수명
+    void testClass(){   //함수명
 
     }
     void setup(){
@@ -94,8 +78,8 @@
 
     }
     void loop(){
-        TestClass();
-        test_variable=analogRead(testpin);
+        testClass();
+        testVariable=analogRead(testpin);
         printf("loop is working");
         printf("Testpin is %d",testpin)
         }
@@ -103,3 +87,5 @@
 
     }
 ```
+
+
